@@ -111,11 +111,15 @@ int main(int argc, char *argv[])
 	packet = (u_char*)&ap;
 
 	packet_send = pcap_sendpacket(handle, packet, 42); //send packet
-	if(packet_send == -1)
+	if(packet_send == 1)
+	{
+		printf("ARP Spoofed!\n");
+	}
+	else if(packet_send == -1)
 	{
 		printf("Failed to send packet.\n");
 		exit(-1);
-	}	
+	}
 	return 0;
 }
 void getMyMacAddress(u_char *macAddress) //get MacAddress from my sys file
