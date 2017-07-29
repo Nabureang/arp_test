@@ -52,12 +52,12 @@ int main(int argc, char *argv[])
 		ap.__ar_sip[i] = myIpAddress[i];
 	}
 	
-	ipAddr_tmp = ntohl(inet_addr(argv[2]));// parse sender(gateway) ip from argv[2] 
+	ipAddr_tmp = ntohl(inet_addr(argv[3]));// parse sender ip from argv[3] 
 	gatewayIpAddress[0] = (ipAddr_tmp & 0xFF000000) >> 24;
 	gatewayIpAddress[1] = (ipAddr_tmp & 0x00FF0000) >> 16;
 	gatewayIpAddress[2] = (ipAddr_tmp & 0x0000FF00) >> 8;
 	gatewayIpAddress[3] = ipAddr_tmp & 0x000000FF;
-	ipAddr_tmp = ntohl(inet_addr(argv[3])); //parse target ip from argv[3]
+	ipAddr_tmp = ntohl(inet_addr(argv[2])); //parse target ip (gateway) from argv[2]
 	ap.__ar_tip[0] = (ipAddr_tmp & 0xFF000000) >> 24;
 	ap.__ar_tip[1] = (ipAddr_tmp & 0x00FF0000) >> 16;
 	ap.__ar_tip[2] = (ipAddr_tmp & 0x0000FF00) >> 8;
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 	}
 
 /**** send ARP reply packet ****/
-	ap.ar_op = 0x0200; //ARPOP_REPLY
+	ap.ar_op = ntohs(ARPOP_REPLY); //ARPOP_REPLY
 	for(int i = 0 ; i < 6 ; i ++)
 	{
 		ap.ether_dhost[i] = targetMacAddress[i];
