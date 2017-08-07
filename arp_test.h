@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <pthread.h>
 
 struct arp_packet
 {
@@ -23,4 +24,18 @@ struct arp_packet
 	u_char __ar_sip[4];		/* Sender IP address.  */
 	u_char __ar_tha[ETH_ALEN];	/* Target hardware address.  */
 	u_char __ar_tip[4];		/* Target IP address.  */
+	u_char data[10000];
+};
+
+struct victimInformation
+{
+	pcap_t *handle;
+	u_char victimIp[4];
+	u_char gatewayIp[4];
+	u_char victimMac[6];
+	u_char gatewayMac[6];
+	u_char myMac[6];
+	u_char myIp[4];
+	struct arp_packet ap;
+	u_char dev[20];
 };
